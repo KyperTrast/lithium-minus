@@ -1,17 +1,19 @@
 # Lithium Minus
 Hook and rune features taken from the Quake 2 Lithium mod, made to work with the Q2 Remaster/Rerelease. Other features have been omitted, hence the name Lithium Minus / Lithium- .
-Go through the original mod's documentation for hook and rune vars and commands.
+Go through the original mod's documentation for more info, including hook and rune vars/commands:
+
+https://quake2lithium.github.io/
 
 ## Global variables
-g_use_hook 0/1 - Enables/disables hook (default: 1)
-g_use_runes 0/1 - Enables/disables runes (default: 1)
-g_hook_help 0/1 - Enables/disables displaying help text for binding hook (default: 0)
-g_hook_wave 0/1 - Enables/disables adding hook_toggle to wave command  (default: 0)
+* g_use_hook 0/1 - Enables/disables hook (default: 1)
+* g_use_runes 0/1 - Enables/disables runes (default: 1)
+* g_hook_help 0/1 - Enables/disables displaying help text for binding hook (default: 0)
+* g_hook_wave 0/1 - Enables/disables adding hook_toggle to wave command  (default: 0)
 
 ## Added commands
-lith_help - display text for instructions on binding hook and overview of runes
-lith_help_cvar - one-liners on all the cvars for configuring hook and runes
-hook_toggle - fires hook on button press, unfires hook on next button press
+* lith_help - display text for instructions on binding hook and overview of runes
+* lith_help_cvar - one-liners on all the cvars for configuring hook and runes
+* hook_toggle - fires hook on button press, unfires hook on next button press
 
 ## Notable items that may differ from original
 * Added hook_toggle - can now use one button to fire/unfire hook in addition to original alias/hold method

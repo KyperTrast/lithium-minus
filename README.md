@@ -18,5 +18,8 @@ https://quake2lithium.github.io/
 ## Notable items that may differ from original
 * Added hook_toggle - can now use one button to fire/unfire hook in addition to original alias/hold method
 * Rune spawning behaviour is changed slightly - bounding box is smaller, added a check to keep runes from getting stuck
-* Regen rune uses a magic number 0.625 I couldn't figure out, default values may vary from original (but you can always tune the regen rate/cap...)
+* Regen rune uses a magic number 0.625 I couldn't figure out, behaviour with default values will vary from original (but you can always tune the regen rate/cap...)
 * Regen doesn't prevent megahealth decay, even if you are below rune_regenmax health
+
+\
+I honestly have no idea what I'm doing but somehow I bashed my keyboard hard enough and things started working...

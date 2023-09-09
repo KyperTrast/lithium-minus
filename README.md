@@ -4,6 +4,14 @@ Go through the original mod's documentation for more info, including hook and ru
 
 https://quake2lithium.github.io/
 
+## Installing and using
+Go to your Quake 2 remaster directory ex.\
+Steam: \<steam\>\steamapps\common\Quake 2\rerelease\
+GOG: \<GOG\>\Quake II Enhanced\
+Create a directory to store the binary ex. "lithminus". Download the release and extract the .dll file to this folder.\
+Load up Q2 and in console, type "game lithminus". Now, create a lobby and configure it as desired, and once you start the game Lithium Minus will be loaded.\
+I've only briefly tested single player but the hook and runes appear to work there.
+
 ## Global variables
 * g_use_hook 0/1 - Enables/disables hook (default: 1)
 * g_use_runes 0/1 - Enables/disables runes (default: 1)
@@ -14,6 +22,7 @@ https://quake2lithium.github.io/
 * lith_help - display text for instructions on binding hook and overview of runes
 * lith_help_cvar - one-liners on all the cvars for configuring hook and runes
 * hook_toggle - fires hook on button press, unfires hook on next button press
+* Bots now have a [BOT] prefix in their name to help distinguish from real players
 
 ## Notable items that may differ from original
 * Added hook_toggle - can now use one button to fire/unfire hook in addition to original alias/hold method

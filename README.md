@@ -15,8 +15,8 @@ I've only briefly tested single player but the hook and runes appear to work the
 ## Global variables
 * g_use_hook 0/1 - Enables/disables hook (default: 1)
 * g_use_runes 0/1 - Enables/disables runes (default: 1)
-* g_hook_help 0/1 - Enables/disables displaying help text for binding hook (default: 0)
-* g_hook_wave 0/1 - Enables/disables adding hook_toggle to wave command  (default: 0)
+* g_hook_help 0/1 - Enables/disables displaying help text for binding hook (default: 1)
+* g_hook_wave 0/1 - Enables/disables adding hook_toggle to wave command  (default: 1)
 
 ## Added commands
 * lith_help - display text for instructions on binding hook and overview of runes

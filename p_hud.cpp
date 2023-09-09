@@ -1075,7 +1075,7 @@ void G_SetStats(edict_t *ent)
 	SetCTFStats(ent);
 	// ZOID
 
-	// Kyper - Lithium port
+	// Kyper - Lithium port - should probably move all of this to a function...
 	// clear rune info if empty, this is set on Rune_Touch/Rune_Give
 	if (!ent->rune)
 	{
@@ -1083,8 +1083,10 @@ void G_SetStats(edict_t *ent)
 		ent->client->ps.stats[STAT_RUNE_PIC] = 0;
 	}
 
+	ent->client->ps.stats[STAT_LITHM_INFO] = CS_OBSERVING;
+
 	// borrowing the CTF Match stats for help text, won't overwrite them if CTF Match is enabled
-    // also, is checking userinfo the best way to have client disable the help text...?
+	// also, is checking userinfo the best way to have client disable the help text...?
 	if (g_hook_help->integer && ent->client->help_idle_time < level.time)
 	{
 		char check_info[MAX_INFO_VALUE] = { 0 };
@@ -1097,7 +1099,7 @@ void G_SetStats(edict_t *ent)
 		}
 		if (ent->client->ps.stats[STAT_CTF_MATCH] == 0 && check_info[0] == 0)
 		{
-			gi.configstring(CONFIG_CTF_MATCH, "PC can type in console: bind mouse2 hook_toggle  OR lith_help");
+			gi.configstring(CONFIG_CTF_MATCH, "PC can type in console: bind mouse2 hook_toggle");
 			ent->client->ps.stats[STAT_CTF_MATCH] = CONFIG_CTF_MATCH;
 		}
 	}

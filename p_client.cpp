@@ -2331,13 +2331,6 @@ void ClientBeginDeathmatch(edict_t *ent)
 
 	// make sure all view stuff is valid
 	ClientEndServerFrame(ent);
-
-	// Kyper - Lithium port - MOTD/help text, probably a better way to do this...
-	if (g_hook_help->integer)
-	{
-		ent->client->help_idle_time = level.time;
-		gi.LocCenter_Print(ent, "Off-hook instructions below\n");
-	}
 }
 
 static void G_SetLevelEntry()

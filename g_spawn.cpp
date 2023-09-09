@@ -1402,9 +1402,11 @@ static void G_InitStatusbar()
 	// should create own stats, "borrowing" the CTF Match ones for now
 	sb.ifstat(STAT_CTF_MATCH).xl(0).yb(-78).stat_string(STAT_CTF_MATCH).endifstat();
 	sb.ifstat(STAT_CTF_TEAMINFO).xl(0).yb(-88).stat_string(STAT_CTF_TEAMINFO).endifstat();
-	// Kyper - Lithium port - rune info
+	// rune info
 	sb.ifstat(STAT_RUNE_TEXT).xr(-126).yb(-16).stat_string(STAT_RUNE_TEXT).endifstat();
 	sb.ifstat(STAT_RUNE_PIC).xr(-152).yb(-24).pic(STAT_RUNE_PIC).endifstat();
+	// bottom left mod name
+	sb.ifstat(STAT_LITHM_INFO).xl(12).yb(-24).stat_string(STAT_LITHM_INFO).endifstat();
 	// Kyper
 
 	gi.configstring(CS_STATUSBAR, sb.sb.str().c_str());

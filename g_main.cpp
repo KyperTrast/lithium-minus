@@ -216,8 +216,8 @@ void PreInitGame()
 	// Kyper - Lithium port
 	g_use_hook = gi.cvar("g_use_hook", "1", CVAR_NOFLAGS);
 	g_use_runes = gi.cvar("g_use_runes", "1", CVAR_NOFLAGS);
-	g_hook_help = gi.cvar("g_hook_help", "0", CVAR_NOFLAGS);
-	g_hook_wave = gi.cvar("g_hook_wave", "0", CVAR_NOFLAGS);
+	g_hook_help = gi.cvar("g_hook_help", "1", CVAR_NOFLAGS);
+	g_hook_wave = gi.cvar("g_hook_wave", "1", CVAR_NOFLAGS);
 	Hook_InitGame();
 	Rune_InitGame();
 	// Kyper

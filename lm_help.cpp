@@ -34,7 +34,10 @@ void Help_Lithium(edict_t* ent, const char* htext)
 								  "Other commands:\n",
 								  "================\n",
 								  "lith_help_cvar: lists summary of each cvar.\n",
-								  "set lith_hide_help 1 u   : hides bottom help text\n",
+								  "\n",
+								  "Currently maintained at:\n",
+								  "https://github.com/KyperTrast/lithium-minus\n",
+								  " \n",
 								  nullptr
 	};
 

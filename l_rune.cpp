@@ -50,6 +50,7 @@ cvar_t *rune_vampire_sound;
 
 int rune_count[NUM_RUNES] = { 0, 0, 0, 0, 0 };
 int rune_total = 0;
+int time_counter = 0;      // Kyper - Lithium port - replaces "counter" in Rune_RunFrame
 
 static int Rune_IsInSolid(edict_t *ent); //QW//
 static int Rune_IsInSolidStopped(edict_t *ent);
@@ -92,6 +93,7 @@ void Rune_InitGame(void)
 void Rune_InitLevel(void)
 {
 	Rune_Reset();
+	time_counter = 0;    // Kyper - Lithium port - moved "counter" from Rune_RunFrame to this var
 
 	gi.soundindex(rune_resist_sound->string);
 	gi.soundindex(rune_strength_sound->string);
@@ -105,7 +107,7 @@ void Rune_InitLevel(void)
 	gi.configstring(CS_RUNE3, "Haste Rune");
 	gi.configstring(CS_RUNE4, "Regen Rune");
 	gi.configstring(CS_RUNE5, "Vampire Rune");
-	gi.configstring(CS_OBSERVING, "Lithium Minus - not used (for now...)");
+	gi.configstring(CS_OBSERVING, "Lithium Minus\nlith_help for info");
 	gi.configstring(CS_SAFETY, "Safety");
 	gi.configstring(CS_HUDRUNE0, "None");
 	gi.configstring(CS_HUDRUNE1, "Resist");
@@ -127,14 +129,13 @@ void Rune_RunFrame(void)
 {
 	edict_t *ent;
 	int i, j, lowest, x;
-	static int counter = level.time.seconds<int>();
 	int playercount = 0;
 
 	// only check once per second
-	if (level.time.seconds<int>() <= counter)
+	if (level.time.seconds<int>() <= time_counter)
 		return;
 
-	counter = level.time.seconds<int>();
+	time_counter = level.time.seconds<int>();
 
 	// Kyper - Lithium port
 	// normally, use_runes is an lvar that has a pointer to function UseRunesChanged
@@ -505,7 +506,7 @@ void Rune_RemoveAll(void)
 	//while ((ent = G_FindByString<&edict_t::classname>(nullptr, "player")))
 	//	ent->rune = 0;
 
-    // Kyper - Lithium port
+	// Kyper - Lithium port
 	// Attempting to use remaster equivalent of remove runes from players crashes
 	// I have no idea what it does, so I'll just use an alternate check...
 	for (auto player : active_players())

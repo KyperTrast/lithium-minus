@@ -142,6 +142,8 @@ cvar_t *g_use_hook;
 cvar_t *g_use_runes;
 cvar_t *g_hook_help;
 cvar_t *g_hook_wave;
+cvar_t *g_rune_crouchdrop;
+cvar_t *g_dm_weapons_stay_fixdrop;
 // Kyper
 
 static cvar_t *g_frames_per_frame;
@@ -218,6 +220,8 @@ void PreInitGame()
 	g_use_runes = gi.cvar("g_use_runes", "1", CVAR_NOFLAGS);
 	g_hook_help = gi.cvar("g_hook_help", "1", CVAR_NOFLAGS);
 	g_hook_wave = gi.cvar("g_hook_wave", "1", CVAR_NOFLAGS);
+	g_rune_crouchdrop = gi.cvar("g_rune_crouchdrop", "1", CVAR_NOFLAGS);
+	g_dm_weapons_stay_fixdrop = gi.cvar("g_dm_weapons_stay_fixdrop", "1", CVAR_NOFLAGS);
 	Hook_InitGame();
 	Rune_InitGame();
 	// Kyper

@@ -3158,6 +3158,10 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 	// Kyper - Lithium port
 	if (client->hook_on && ent->client->hook)
 		Hook_Service(client->hook);
+
+	// My attempt at giving console players a way to drop runes
+	if (g_rune_crouchdrop->integer && ((ent->client->latched_buttons | ent->client->buttons) & BUTTON_HOLSTER) && (ucmd->buttons & BUTTON_CROUCH))
+		Rune_Drop(ent);
 	// Kyper
 
 	if (level.intermissiontime || ent->client->awaiting_respawn)

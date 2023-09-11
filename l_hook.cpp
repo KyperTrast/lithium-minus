@@ -38,14 +38,14 @@ cvar_t *hook_delay;
 
 void Hook_InitGame(void)
 {
-	hook_speed = gi.cvar("hook_speed", "900", CVAR_SERVERINFO);
-	hook_pullspeed = gi.cvar("hook_pullspeed", "700", CVAR_SERVERINFO);
-	hook_sky = gi.cvar("hook_sky", "0", CVAR_SERVERINFO);
-	hook_maxtime = gi.cvar("hook_maxtime", "5", CVAR_SERVERINFO);
-	hook_damage = gi.cvar("hook_damage", "1", CVAR_SERVERINFO);
-	hook_initdamage = gi.cvar("hook_initdamage", "10", CVAR_SERVERINFO);
-	hook_maxdamage = gi.cvar("hook_maxdamage", "20", CVAR_SERVERINFO);
-	hook_delay = gi.cvar("hook_delay", "0.2", CVAR_SERVERINFO);
+	hook_speed = gi.cvar("hook_speed", "900", CVAR_NOFLAGS);
+	hook_pullspeed = gi.cvar("hook_pullspeed", "700", CVAR_NOFLAGS);
+	hook_sky = gi.cvar("hook_sky", "0", CVAR_NOFLAGS);
+	hook_maxtime = gi.cvar("hook_maxtime", "5", CVAR_NOFLAGS);
+	hook_damage = gi.cvar("hook_damage", "1", CVAR_NOFLAGS);
+	hook_initdamage = gi.cvar("hook_initdamage", "10", CVAR_NOFLAGS);
+	hook_maxdamage = gi.cvar("hook_maxdamage", "20", CVAR_NOFLAGS);
+	hook_delay = gi.cvar("hook_delay", "0.2", CVAR_NOFLAGS);
 }
 
 void Hook_PlayerDie(edict_t *attacker, edict_t *self)

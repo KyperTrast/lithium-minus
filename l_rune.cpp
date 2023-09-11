@@ -483,8 +483,6 @@ int Rune_HasHaste(edict_t *player)
 	return player->rune & RUNE_HASTE;
 }
 
-// Kyper - Lithium port - I've left this unused, in original code it is called from Megahealth_Think in g_items.c
-// the check would prevent megahealth reducing health, and alsos applied this behaviour to Autodoc
 int Rune_HasRegen(edict_t *player)
 {
 	return player->rune & RUNE_REGEN;

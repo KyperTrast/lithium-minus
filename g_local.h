@@ -1911,6 +1911,8 @@ extern cvar_t *g_use_hook;
 extern cvar_t *g_use_runes;
 extern cvar_t *g_hook_help;
 extern cvar_t *g_hook_wave;
+extern cvar_t *g_rune_crouchdrop;
+extern cvar_t *g_dm_weapons_stay_fixdrop;
 // Kyper
 
 #define world (&g_edicts[0])

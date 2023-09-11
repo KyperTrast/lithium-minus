@@ -23,7 +23,7 @@ void Help_Lithium(edict_t* ent, const char* htext)
 								  "Runes spawn randomly on the map, touch one to pick it up.\n",
 								  "You can only hold one at a time.\n",
 								  "Your held rune is displayed in the bottom right corner.\n",
-								  "Drop runes with drop_rune\n",
+								  "Drop runes with drop_rune or Weapon Wheel+crouch (if enabled).\n",
 								  "\n",
 								  "Resist: Blue, cuts damage by 50%\n",
 								  "Strength: Red, deals double damage\n",
@@ -79,8 +79,10 @@ void Help_Lithium(edict_t* ent, const char* htext)
 								  "================\n",
 								  "g_use_hook: Enables/disables use of off-hand hook. Default: 1\n",
 								  "g_use_runes: Enables/disables runes. Default: 1\n",
-								  "g_hook_help: Enables/disables showing help text for everyone. Default: 0\n",
-								  "g_hook_wave: Adds hook_toggle to wave 3 command - console friendly! Default: 0\n",
+								  "g_hook_help: Enables/disables showing help text for everyone. Default: 1\n",
+								  "g_hook_wave: Adds hook_toggle to wave 3 command - console friendly! Default: 1\n",
+								  "g_rune_crouchdrop: Ability to drop runes by opening Weapon Wheel+crouching. Default: 1\n",
+								  "g_dm_weapons_stay_fixdrop: Fixes players not dropping weapons on death. Default: 1\n",
 								  nullptr
 	};
 
@@ -106,7 +108,7 @@ void Help_LithHUDText(edict_t *player)
 
 		if (level.time - player->client->help_idle_time < -2000_ms)
 			player->client->help_idle_time = level.time + 2000_ms;
-		else if (level.time - player->client->help_idle_time > 2000_ms)
-			player->client->help_idle_time = level.time - 2000_ms;
+		else if (level.time - player->client->help_idle_time > 2500_ms)
+			player->client->help_idle_time = level.time - 2500_ms;
 	}
 }

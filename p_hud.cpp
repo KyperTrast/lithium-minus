@@ -1085,21 +1085,25 @@ void G_SetStats(edict_t *ent)
 
 	ent->client->ps.stats[STAT_LITHM_INFO] = CS_OBSERVING;
 
-	// borrowing the CTF Match stats for help text, won't overwrite them if CTF Match is enabled
-	// also, is checking userinfo the best way to have client disable the help text...?
+	// borrowing the CTF Match stats for help text, won't overwrite them if CTF Match is enabled	
 	if (g_hook_help->integer && ent->client->help_idle_time < level.time)
 	{
-		char check_info[MAX_INFO_VALUE] = { 0 };
-		gi.Info_ValueForKey(ent->client->pers.userinfo, "lith_hide_help", check_info, sizeof(check_info));
-		
-		if (ent->client->ps.stats[STAT_CTF_TEAMINFO] == 0 && check_info[0] == 0 && g_hook_wave->integer)
+		char helptext[100] = "";
+		char wavehook[100] = "Set Multiplayer -> Wave button for hook, ";
+		char crouchdrop[100] = "drop rune with Weapon Wheel+Crouch";
+		if (g_hook_wave->integer)
+			Q_strlcat(helptext, wavehook, sizeof(wavehook));
+		if (g_rune_crouchdrop->integer)
+			Q_strlcat(helptext, crouchdrop, sizeof(crouchdrop));
+
+		if (ent->client->ps.stats[STAT_CTF_TEAMINFO] == 0 && helptext[0] != 0)
 		{
-			gi.configstring(CONFIG_CTF_TEAMINFO, "Map a button to Multiplayer -> Wave for off-hand hook");
+			gi.configstring(CONFIG_CTF_TEAMINFO, helptext);
 			ent->client->ps.stats[STAT_CTF_TEAMINFO] = CONFIG_CTF_TEAMINFO;
 		}
-		if (ent->client->ps.stats[STAT_CTF_MATCH] == 0 && check_info[0] == 0)
+		if (ent->client->ps.stats[STAT_CTF_MATCH] == 0)
 		{
-			gi.configstring(CONFIG_CTF_MATCH, "PC can type in console: bind mouse2 hook_toggle");
+			gi.configstring(CONFIG_CTF_MATCH, "PC can bind in console: bind mouse2 hook_toggle ; bind x drop_rune");
 			ent->client->ps.stats[STAT_CTF_MATCH] = CONFIG_CTF_MATCH;
 		}
 	}

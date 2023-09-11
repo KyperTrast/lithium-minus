@@ -638,6 +638,12 @@ Drop_Weapon
 void Drop_Weapon(edict_t *ent, gitem_t *item)
 {
 	item_id_t index = item->id;
+
+	// Kyper - Lithium port - use original check for weapons stay
+	if (g_dm_weapons_stay_fixdrop->integer && g_dm_weapons_stay->integer)
+		return;
+	// Kyper
+
 	// see if we're already using it
 	if (((item == ent->client->pers.weapon) || (item == ent->client->newweapon)) && (ent->client->pers.inventory[index] == 1))
 	{

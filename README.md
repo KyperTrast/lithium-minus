@@ -10,11 +10,11 @@ From the Github page, in the Releases -> Latest section on the right-hand side, 
 Go to your Quake 2 remaster directory ex.\
 Steam: \<steam\>\steamapps\common\Quake 2\rerelease\
 GOG: \<GOG\>\Quake II Enhanced\
-Create a directory to store the binary and name it whatever you want ex. `lithminus`. Extract `lithminus.zip` here and you will see a .DLL file. Then, use one of the two methods listed below to load the mod.
+Create a directory to store the binary and name it `lithminus`. Extract `lithminus.zip` here and you will see a .DLL file. Then, use one of the two methods listed below to load the mod.
 ### Load the mod manually
-Load up Quake 2 and in console, type `game lithminus` (no quotes). Now, create a lobby and configure it as desired, and once you start the game Lithium Minus will be loaded.
+Load up Quake 2 and then press the tilde key (~) to open the console. In here, type `game lithminus` (no quotes). Now, create a lobby and configure it as desired, and once you start the game Lithium Minus will be loaded.
 ### Run the config file
-Get a copy of the "lithsetup_bots.cfg" file from the source code above, and place it into your rerelease\baseq2 folder. Load up Quake 2 and in console, type `exec lithsetup_bots.cfg` (no quotes). This will create a local game with the below:
+Get a copy of the "lithsetup_bots.cfg" file from the source code above, and place it into your rerelease\baseq2 folder. Load up Quake 2 and then press the tilde key (~) to open the console. In here, type `exec lithsetup_bots.cfg` (no quotes). This will create a local game with the below:
 * set `game lithminus`
 * immediately load q2dm1 with `map q2dm1`
 * load 4 bots with `bot_minClients 5`

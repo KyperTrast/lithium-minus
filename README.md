@@ -1,16 +1,25 @@
 # Lithium Minus
 Hook and rune features taken from the Quake 2 Lithium mod, made to work with the Q2 Remaster/Rerelease. Other features have been omitted, hence the name Lithium Minus / Lithium- .
+I've only briefly tested single player but the hook and runes appear to work there.\
 Go through the original mod's documentation for more info, including hook and rune vars/commands:
 
 https://quake2lithium.github.io/
 
 ## Installing and using
+From the Github page, in the Releases -> Latest section on the right-hand side, download `lithminus.zip`.
 Go to your Quake 2 remaster directory ex.\
 Steam: \<steam\>\steamapps\common\Quake 2\rerelease\
 GOG: \<GOG\>\Quake II Enhanced\
-Create a directory to store the binary ex. "lithminus". Download the release and extract the .dll file to this folder.\
-Load up Q2 and in console, type "game lithminus". Now, create a lobby and configure it as desired, and once you start the game Lithium Minus will be loaded.\
-I've only briefly tested single player but the hook and runes appear to work there.
+Create a directory to store the binary and name it whatever you want ex. `lithminus`. Extract `lithminus.zip` here and you will see a .DLL file. Then, use one of the two methods listed below to load the mod.
+### Load the mod manually
+Load up Quake 2 and in console, type `game lithminus` (no quotes). Now, create a lobby and configure it as desired, and once you start the game Lithium Minus will be loaded.
+### Run the config file
+Get a copy of the "lithsetup_bots.cfg" file from the source code above, and place it into your rerelease\baseq2 folder. Load up Quake 2 and in console, type `exec lithsetup_bots.cfg` (no quotes). This will create a local game with the below:
+* set `game lithminus`
+* immediately load q2dm1 with `map q2dm1`
+* load 4 bots with `bot_minClients 5`
+
+If you see "Lithium Minus" in the bottom left then the mod has loaded. You can immediately quit the map and create your own lobby, and modify the config file for future use.
 
 ## Added variables
 * g_use_hook 0/1 - Enables/disables hook (default: 1)

@@ -5,7 +5,7 @@ Go through the original mod's documentation for more info, including hook and ru
 
 https://quake2lithium.github.io/
 
-## Installing and using
+## Installing and using the mod
 From the Github page, in the Releases -> Latest section on the right-hand side, download `lithminus.zip`.
 Go to your Quake 2 remaster directory ex.\
 Steam: \<steam\>\steamapps\common\Quake 2\rerelease\
@@ -20,6 +20,14 @@ Get a copy of the "lithsetup_bots.cfg" file from the source code above, and plac
 * load 4 bots with `bot_minClients 5`
 
 If you see "Lithium Minus" in the bottom left then the mod has loaded. You can immediately quit the map and create your own lobby, and modify the config file for future use.
+
+## Using the hook and runes
+You can use the original hold button down method or the new toggle method. Run one of the below in console (tilde key ~):\
+Hold button down (change mouse2 to desired key): `alias +hook hook ; alias -hook unhook ; bind mouse2 +hook`\
+Toggle (change mouse2 to desired key): `bind mouse2 hook_toggle`\
+Alternatively, if g_hook_wave is enabled, you can use the menu to map the Wave key: Input -> Multiplayer section -> Wave
+
+Runes spawn randomly on the map, touch one to pick it up. Your held rune is displayed in the bottom right corner. Drop a rune by binding a key to drop_rune ex. (change x to desired key): `bind x drop_rune`. Alternatively, if g_rune_crouchdrop is enabled, you can open your Weapon Wheel and Crouch to drop your rune.
 
 ## Added variables
 * g_use_hook 0/1 - Enables/disables hook (default: 1)

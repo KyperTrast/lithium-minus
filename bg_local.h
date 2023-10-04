@@ -244,22 +244,24 @@ enum player_stat_t
 
     // [Paril-KEX] currently active wheel weapon (or one we're switching to)
     STAT_ACTIVE_WHEEL_WEAPON,
-    // [Paril-KEX] top of screen coop respawn state
-    STAT_COOP_RESPAWN,
-    // [Paril-KEX] respawns remaining
-    STAT_LIVES,
-    // [Paril-KEX] hit marker; # of damage we successfully landed
-    STAT_HIT_MARKER,
-    // [Paril-KEX]
-    STAT_SELECTED_ITEM_NAME,
-    // [Paril-KEX]
-    STAT_HEALTH_BARS, // two health bar values; 7 bits for value, 1 bit for active
-    // if active,
+	// [Paril-KEX] top of screen coop respawn state
+	STAT_COOP_RESPAWN,
+	// [Paril-KEX] respawns remaining
+	STAT_LIVES,
+	// [Paril-KEX] hit marker; # of damage we successfully landed
+	STAT_HIT_MARKER,
+	// [Paril-KEX]
+	STAT_SELECTED_ITEM_NAME,
+	// [Paril-KEX]
+	STAT_HEALTH_BARS, // two health bar values; 7 bits for value, 1 bit for active
+	// [Paril-KEX]
+	STAT_ACTIVE_WEAPON,
 
     // Kyper - Lithium port
     STAT_RUNE_PIC,
     STAT_RUNE_TEXT,
     STAT_LITHM_INFO,
+	STAT_LITHM_SAFETY,
     // Kyper
 
     // don't use; just for verification

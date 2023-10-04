@@ -440,7 +440,7 @@ void Rune_ClientFrame(edict_t *player)
 
 	// Kyper - Lithium port - maybe rework the calculations so that it's time based?
 	// Rune_ClientFrame/ClientBeginServerFrame appears to be called every 25 ms
-	// no idea what 0.625 represents, I've divided it by 3.75 based on an imprecise stopwatch test...
+	// no idea what 0.625 represents, I've divided it by 4 due to the 10 -> 40 tick rate
 	if (player->rune & RUNE_REGEN && player->health < rune_regenmax->value) 
 	{		
 		float health = player->health + player->client->regen_remainder;
@@ -448,7 +448,7 @@ void Rune_ClientFrame(edict_t *player)
 		if (newhealth > rune_regencap->value)
 			newhealth = rune_regencap->value;
 		//newhealth *= rune_regen->value * 0.625;
-		newhealth *= rune_regen->value * .1667;
+		newhealth *= rune_regen->value * .15625;
 		health += newhealth;
 		player->health = (int)health;
 		player->client->regen_remainder = health - (float)player->health;

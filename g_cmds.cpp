@@ -3,7 +3,7 @@
 #include "g_local.h"
 #include "m_player.h"
 
-void SelectNextItem(edict_t *ent, item_flags_t itflags)
+void SelectNextItem(edict_t *ent, item_flags_t itflags, bool menu = true)
 {
 	gclient_t *cl;
 	item_id_t  i, index;
@@ -12,12 +12,12 @@ void SelectNextItem(edict_t *ent, item_flags_t itflags)
 	cl = ent->client;
 
 	// ZOID
-	if (cl->menu)
+	if (menu && cl->menu)
 	{
 		PMenu_Next(ent);
 		return;
 	}
-	else if (cl->chase_target)
+	else if (menu && cl->chase_target)
 	{
 		ChaseNext(ent);
 		return;
@@ -96,7 +96,7 @@ void ValidateSelectedItem(edict_t *ent)
 	if (cl->pers.inventory[cl->pers.selected_item])
 		return; // valid
 
-	SelectNextItem(ent, IF_ANY);
+	SelectNextItem(ent, IF_ANY, false);
 }
 
 //=================================================================================
@@ -461,7 +461,7 @@ void Cmd_Spawn_f(edict_t *ent)
 		if (other->inuse)
 			gi.linkentity(other);
 
-		if (other->svflags & SVF_MONSTER)
+		if ((other->svflags & SVF_MONSTER) && other->think)
 			other->think(other);
 	}
 
@@ -495,6 +495,19 @@ void Cmd_Teleport_f(edict_t *ent)
 	ent->s.origin[0] = (float) atof(gi.argv(1));
 	ent->s.origin[1] = (float) atof(gi.argv(2));
 	ent->s.origin[2] = (float) atof(gi.argv(3));
+
+	if (gi.argc() >= 4)
+	{
+		float pitch = (float) atof(gi.argv(4));
+		float yaw = (float) atof(gi.argv(5));
+		float roll = (float) atof(gi.argv(6));
+		vec3_t ang { pitch, yaw, roll };
+
+		ent->client->ps.pmove.delta_angles = ( ang - ent->client->resp.cmd_angles );
+		ent->client->ps.viewangles = {};
+		ent->client->v_angle = {};
+	}
+
 	gi.linkentity(ent);
 }
 
@@ -673,10 +686,16 @@ void Cmd_Drop_f(edict_t *ent)
 	// Kyper
 
 	// ZOID--special case for tech powerups
-	if (Q_strcasecmp(gi.args(), "tech") == 0 && (it = CTFWhat_Tech(ent)) != nullptr)
+	if (Q_strcasecmp(gi.args(), "tech") == 0)
 	{
-		it->drop(ent, it);
-		ValidateSelectedItem(ent);
+		it = CTFWhat_Tech(ent);
+
+		if (it)
+		{
+			it->drop(ent, it);
+			ValidateSelectedItem(ent);
+		}
+
 		return;
 	}
 	// ZOID
@@ -1046,7 +1065,7 @@ void Cmd_Where_f( edict_t * ent ) {
 	const vec3_t & origin = ent->s.origin;
 
 	std::string location;
-	fmt::format_to( std::back_inserter( location ), FMT_STRING( "{:.1f} {:.1f} {:.1f}\n" ), origin[ 0 ], origin[ 1 ], origin[ 2 ] );
+	fmt::format_to( std::back_inserter( location ), FMT_STRING( "{:.1f} {:.1f} {:.1f} {:.1f} {:.1f} {:.1f}\n" ), origin[ 0 ], origin[ 1 ], origin[ 2 ], ent->client->ps.viewangles[0], ent->client->ps.viewangles[1], ent->client->ps.viewangles[2] );
 	gi.LocClient_Print( ent, PRINT_HIGH, "Location: {}\n", location.c_str() );
 	gi.SendToClipBoard( location.c_str() );
 }
@@ -1225,9 +1244,7 @@ void Cmd_Wave_f(edict_t *ent)
 	if (do_animate)
 		ent->client->anim_priority = ANIM_WAVE;
 
-	constexpr float NOTIFY_DISTANCE = 256.f;
-	bool notified_anybody = false;
-	const char *self_notify_msg = nullptr, *other_notify_msg = nullptr, *other_notify_none_msg = nullptr;
+	const char *other_notify_msg = nullptr, *other_notify_none_msg = nullptr;
 
 	vec3_t start, dir;
 	P_ProjectSource(ent, ent->client->v_angle, { 0, 0, 0 }, start, dir);
@@ -1258,7 +1275,6 @@ void Cmd_Wave_f(edict_t *ent)
 	switch (i)
 	{
 	case GESTURE_FLIP_OFF:
-		self_notify_msg = "$g_flipoff";
 		other_notify_msg = "$g_flipoff_other";
 		other_notify_none_msg = "$g_flipoff_none";
 		if (do_animate)
@@ -1268,7 +1284,6 @@ void Cmd_Wave_f(edict_t *ent)
 		}
 		break;
 	case GESTURE_SALUTE:
-		self_notify_msg = "$g_salute";
 		other_notify_msg = "$g_salute_other";
 		other_notify_none_msg = "$g_salute_none";
 		if (do_animate)
@@ -1278,7 +1293,6 @@ void Cmd_Wave_f(edict_t *ent)
 		}
 		break;
 	case GESTURE_TAUNT:
-		self_notify_msg = "$g_taunt";
 		other_notify_msg = "$g_taunt_other";
 		other_notify_none_msg = "$g_taunt_none";
 		if (do_animate)
@@ -1288,7 +1302,6 @@ void Cmd_Wave_f(edict_t *ent)
 		}
 		break;
 	case GESTURE_WAVE:
-		self_notify_msg = "$g_wave";
 		other_notify_msg = "$g_wave_other";
 		other_notify_none_msg = "$g_wave_none";
 		if (do_animate)
@@ -1299,7 +1312,6 @@ void Cmd_Wave_f(edict_t *ent)
 		break;
 	case GESTURE_POINT:
 	default:
-		self_notify_msg = "$g_point";
 		other_notify_msg = "$g_point_other";
 		other_notify_none_msg = "$g_point_none";
 		if (do_animate)
@@ -1349,7 +1361,7 @@ void Cmd_Wave_f(edict_t *ent)
 				gi.WriteShort(POI_PING + (ent->s.number - 1));
 				gi.WriteShort(5000);
 				gi.WritePosition(tr.endpos);
-				gi.WriteShort(gi.imageindex("loc_ping"));
+				gi.WriteShort(level.pic_ping);
 				gi.WriteByte(208);
 				gi.WriteByte(POI_FLAG_NONE);
 				gi.unicast(player, false);
@@ -1369,6 +1381,7 @@ void Cmd_Wave_f(edict_t *ent)
 
 				ent->client->hook_toggle = true;
 				Weapon_Hook_Fire(ent);
+				ent->safety_time = 0_ms;
 			}
 		}
 	}
@@ -1627,6 +1640,7 @@ void ClientCommand(edict_t *ent)
 			{
 				ent->client->hook_toggle = !(Q_strcasecmp(cmd, "hook_toggle"));
 				Weapon_Hook_Fire(ent);
+				ent->safety_time = 0_ms;
 			}
 		}
 		else

@@ -82,7 +82,8 @@ void Help_Lithium(edict_t* ent, const char* htext)
 								  "g_hook_help: Enables/disables showing help text for everyone. Default: 1\n",
 								  "g_hook_wave: Adds hook_toggle to wave 3 command - console friendly! Default: 1\n",
 								  "g_rune_crouchdrop: Ability to drop runes by opening Weapon Wheel+crouching. Default: 1\n",
-								  "g_dm_weapons_stay_fixdrop: Fixes players not dropping weapons on death. Default: 1\n",
+								  "g_use_safety: Grants temporary invincibility after spawning. Default: 0\n",
+								  "g_safety_time: Controls duration of invincibility after spawning. Default: 4.0\n",
 								  nullptr
 	};
 

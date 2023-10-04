@@ -35,7 +35,8 @@ Runes spawn randomly on the map, touch one to pick it up. Your held rune is disp
 * g_hook_help 0/1 - Enables/disables displaying help text for binding hook (default: 1)
 * g_hook_wave 0/1 - Enables/disables adding hook_toggle to wave command  (default: 1)
 * g_rune_crouchdrop 0/1 - Ability to drop runes by opening Weapon Wheel and crouching (default: 1)
-* g_dm_weapons_stay_fixdrop 0/1 - Fixes bug with players not dropping weapons on death when weapons stay is enabled, more info below (default: 1)
+* g_use_safety 0/1 - Enables/disables protection after spawning (default: 0)
+* g_safety_time \<float\> - Seconds of protection if using safety (default: 4.0)
 
 ## New commands added for this remaster port
 * lith_help - display text for instructions on binding hook and overview of runes
@@ -50,11 +51,7 @@ Runes spawn randomly on the map, touch one to pick it up. Your held rune is disp
 
 ## Notable items that may differ from original
 * Rune spawning behaviour is changed slightly - bounding box is smaller, added a check to keep runes from getting stuck
-* Regen rune uses a magic number 0.625 I couldn't figure out, behaviour with default values will vary from original (but you can always tune the regen rate/cap...)
-
-## g_dm_weapons_stay_fixdrop
-The remaster changed the code for handling weapons dropping when g_dm_weapons_stay is enabled. There are more details in a Steam guide if you want to look that up, but the short of it is that the remaster behaviour differs from the original; if a player dies in the original game with weapons stay on, that player will drop their weapon provided they still have ammo for that weapon. In the remaster, this no longer happens due to the code change. I personally find this new implementation to be a bug as the remaster still has players drop hand grenades if they are holding them before death.\
-g_dm_weapons_stay_fixdrop restores the original game behaviour (it basically uses the same code/logic). The only thing to note is that this needs to be turned on with g_dm_weapons_stay before the lobby/game is started, otherwise it won't take effect as it needs to be enabled to prevent the rerelease code from affecting weapons. This is on by default so you probably don't need to worry, but if you are tinkering with the values mid-game you may need to reload the game state with map \<mapname\>.
+* Safety still shows health icon
 
 ## Other/blog stuff
 I honestly have no idea what I'm doing but somehow I bashed my keyboard hard enough and things started working...

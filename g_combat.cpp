@@ -653,6 +653,11 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 		}
 	}
 
+	// Kyper - Lithium port
+	if (targ->safety_time && !(dflags & DAMAGE_NO_PROTECTION))
+		return;
+	// Kyper
+
 	take = damage;
 	save = 0;
 

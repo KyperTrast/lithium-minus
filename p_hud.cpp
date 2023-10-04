@@ -279,6 +279,8 @@ void BeginIntermission(edict_t *targ)
 
 	game.autosaved = false;
 
+	level.intermissiontime = level.time;
+
 	// respawn any dead clients
 	for (uint32_t i = 0; i < game.maxclients; i++)
 	{
@@ -286,10 +288,17 @@ void BeginIntermission(edict_t *targ)
 		if (!client->inuse)
 			continue;
 		if (client->health <= 0)
+		{
+			// give us our max health back since it will reset
+			// to pers.health; in instanced items we'd lose the items
+			// we touched so we always want to respawn with our max.
+			if (P_UseCoopInstancedItems())
+				client->client->pers.health = client->client->pers.max_health = client->max_health;
+
 			respawn(client);
+		}
 	}
 
-	level.intermissiontime = level.time;
 	level.intermission_server_frame = gi.ServerFrame();
 	level.changemap = targ->map;
 	level.intermission_clear = targ->spawnflags.has(SPAWNFLAG_CHANGELEVEL_CLEAR_INVENTORY);
@@ -754,6 +763,7 @@ void G_SetStats(edict_t *ent)
 	ent->client->ps.stats[STAT_ACTIVE_WHEEL_WEAPON] = (ent->client->newweapon ? ent->client->newweapon->weapon_wheel_index :
 		ent->client->pers.weapon ? ent->client->pers.weapon->weapon_wheel_index :
 		-1);
+	ent->client->ps.stats[STAT_ACTIVE_WEAPON] = ent->client->pers.weapon ? ent->client->pers.weapon->weapon_wheel_index : -1;
 
 	//
 	// ammo
@@ -1084,6 +1094,11 @@ void G_SetStats(edict_t *ent)
 	}
 
 	ent->client->ps.stats[STAT_LITHM_INFO] = CS_OBSERVING;
+
+	if (ent->safety_time)
+		ent->client->ps.stats[STAT_LITHM_SAFETY] = CS_SAFETY;
+	else
+		ent->client->ps.stats[STAT_LITHM_SAFETY] = 0;
 
 	// borrowing the CTF Match stats for help text, won't overwrite them if CTF Match is enabled	
 	if (g_hook_help->integer && ent->client->help_idle_time < level.time)

@@ -22,8 +22,8 @@ local_game_import_t  gi;
 game_export_t  globals;
 spawn_temp_t   st;
 
-int	  sm_meat_index;
-int	  snd_fry;
+cached_modelindex		sm_meat_index;
+cached_soundindex		snd_fry;
 
 edict_t *g_edicts;
 
@@ -143,7 +143,8 @@ cvar_t *g_use_runes;
 cvar_t *g_hook_help;
 cvar_t *g_hook_wave;
 cvar_t *g_rune_crouchdrop;
-cvar_t *g_dm_weapons_stay_fixdrop;
+cvar_t *g_use_safety;
+cvar_t *g_safety_time;
 // Kyper
 
 static cvar_t *g_frames_per_frame;
@@ -221,7 +222,8 @@ void PreInitGame()
 	g_hook_help = gi.cvar("g_hook_help", "1", CVAR_NOFLAGS);
 	g_hook_wave = gi.cvar("g_hook_wave", "1", CVAR_NOFLAGS);
 	g_rune_crouchdrop = gi.cvar("g_rune_crouchdrop", "1", CVAR_NOFLAGS);
-	g_dm_weapons_stay_fixdrop = gi.cvar("g_dm_weapons_stay_fixdrop", "1", CVAR_NOFLAGS);
+	g_use_safety = gi.cvar("g_use_safety", "0", CVAR_NOFLAGS);
+	g_safety_time = gi.cvar("g_safety_time", "4.0", CVAR_NOFLAGS);
 	Hook_InitGame();
 	Rune_InitGame();
 	// Kyper
@@ -353,7 +355,7 @@ void InitGame()
 	g_friendly_fire = gi.cvar("g_friendly_fire", "0", CVAR_NOFLAGS);
 	g_dm_force_respawn = gi.cvar("g_dm_force_respawn", "0", CVAR_NOFLAGS);
 	g_dm_force_respawn_time = gi.cvar("g_dm_force_respawn_time", "0", CVAR_NOFLAGS);
-	g_dm_spawn_farthest = gi.cvar("g_dm_spawn_farthest", "0", CVAR_NOFLAGS);
+	g_dm_spawn_farthest = gi.cvar("g_dm_spawn_farthest", "1", CVAR_NOFLAGS);
 	g_no_armor = gi.cvar("g_no_armor", "0", CVAR_NOFLAGS);
 	g_dm_allow_exit = gi.cvar("g_dm_allow_exit", "0", CVAR_NOFLAGS);
 	g_infinite_ammo = gi.cvar("g_infinite_ammo", "0", CVAR_LATCH);
@@ -466,6 +468,9 @@ Q2GAME_API game_export_t *GetGameAPI(game_import_t *import)
 	globals.Bot_TriggerEdict = Bot_TriggerEdict;
 	globals.Bot_GetItemID = Bot_GetItemID;
 	globals.Bot_UseItem = Bot_UseItem;
+	globals.Edict_ForceLookAtPoint = Edict_ForceLookAtPoint;
+	globals.Bot_PickedUpItem = Bot_PickedUpItem;
+
 	globals.Entity_IsVisibleToPlayer = Entity_IsVisibleToPlayer;
 	globals.GetShadowLightData = GetShadowLightData;
 

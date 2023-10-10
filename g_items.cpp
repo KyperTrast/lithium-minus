@@ -159,6 +159,10 @@ THINK(DoRespawn) (edict_t *ent) -> void
 	// send an effect
 	ent->s.event = EV_ITEM_RESPAWN;
 
+	// Kyper - Lithium port
+	Pack_MaybeSpawn(ent->s.origin);
+	// Kyper
+
 	// ROGUE
 	if (g_dm_random_items->integer)
 	{
@@ -382,15 +386,18 @@ bool Pickup_Bandolier(edict_t *ent, edict_t *other)
 
 bool Pickup_Pack(edict_t *ent, edict_t *other)
 {
-	G_AdjustAmmoCap(other, AMMO_BULLETS, 300);
-	G_AdjustAmmoCap(other, AMMO_SHELLS, 200);
-	G_AdjustAmmoCap(other, AMMO_ROCKETS, 100);
-	G_AdjustAmmoCap(other, AMMO_GRENADES, 100);
-	G_AdjustAmmoCap(other, AMMO_CELLS, 300);
-	G_AdjustAmmoCap(other, AMMO_SLUGS, 100);
-	G_AdjustAmmoCap(other, AMMO_MAGSLUG, 100);
-	G_AdjustAmmoCap(other, AMMO_FLECHETTES, 300);
-	G_AdjustAmmoCap(other, AMMO_DISRUPTOR, 30);
+	if (!use_packs->integer)    // Kyper - Lithium port
+	{
+		G_AdjustAmmoCap(other, AMMO_BULLETS, 300);
+		G_AdjustAmmoCap(other, AMMO_SHELLS, 200);
+		G_AdjustAmmoCap(other, AMMO_ROCKETS, 100);
+		G_AdjustAmmoCap(other, AMMO_GRENADES, 100);
+		G_AdjustAmmoCap(other, AMMO_CELLS, 300);
+		G_AdjustAmmoCap(other, AMMO_SLUGS, 100);
+		G_AdjustAmmoCap(other, AMMO_MAGSLUG, 100);
+		G_AdjustAmmoCap(other, AMMO_FLECHETTES, 300);
+		G_AdjustAmmoCap(other, AMMO_DISRUPTOR, 30);
+	}
 
 	G_AddAmmoAndCapQuantity(other, AMMO_BULLETS);
 	G_AddAmmoAndCapQuantity(other, AMMO_SHELLS);
@@ -1286,6 +1293,9 @@ be on an entity that hasn't spawned yet.
 */
 void SpawnItem(edict_t *ent, gitem_t *item)
 {
+	// Kyper - Lithium port
+	Pack_MaybeSpawn(ent->s.origin);
+	// Kyper
 	// [Sam-KEX]
 	// Paril: allow all keys to be trigger_spawn'd (N64 uses this
 	// a few different times)
@@ -1430,6 +1440,15 @@ void SpawnItem(edict_t *ent, gitem_t *item)
 	}
 	// ROGUE
 	//==========
+
+	// Kyper - Lithium port
+	// let's apply the Lithium no-item spawning to both DM and single player/coop
+	if (!Var_SpawnEntity(ent))
+	{
+		G_FreeEdict(ent);
+		return;
+	}
+	// Kyper
 
 	// [Paril-KEX] power armor breaks infinite ammo
 	if (G_CheckInfiniteAmmo(item))

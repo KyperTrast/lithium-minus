@@ -995,11 +995,17 @@ GRENADE
 
 void weapon_grenade_fire(edict_t *ent, bool held)
 {
-	int	  damage = 125;
+	// Kyper - Lithium port
+	//int	  damage = 125;
+	int	  damage = grenade_damage->integer;
+	// Kyper
 	int	  speed;
 	float radius;
 
-	radius = (float) (damage + 40);
+	// Kyper - Lithium port
+	//radius = (float) (damage + 40);
+	radius = (float) (grenade_radius->value);
+	// Kyper
 	if (is_quad)
 		damage *= damage_multiplier;
 
@@ -1243,10 +1249,16 @@ GRENADE LAUNCHER
 
 void weapon_grenadelauncher_fire(edict_t *ent)
 {
-	int	  damage = 120;
+	// Kyper - Lithium port
+	//int	  damage = 120;
+	int	  damage = grenadelauncher_damage->integer;
+	// Kyper
 	float radius;
 
-	radius = (float) (damage + 40);
+	// Kyper - Lithium port
+	//radius = (float) (damage + 40);
+	radius = (float)(grenadelauncher_radius->value);
+	// Kyper
 	if (is_quad)
 		damage *= damage_multiplier;
 
@@ -1291,9 +1303,15 @@ void Weapon_RocketLauncher_Fire(edict_t *ent)
 	float damage_radius;
 	int	  radius_damage;
 
-	damage = irandom(100, 120);
-	radius_damage = 120;
-	damage_radius = 120;
+	// Kyper - Lithium port
+	//damage = irandom(100, 120);
+	//radius_damage = 120;
+	//damage_radius = 120;
+	damage = irandom(rocket_damage->integer, rocket_damage->integer + rocket_damage2->integer);
+	radius_damage = rocket_radius->integer;
+	damage_radius = rocket_rdamage->integer;
+	// Kyper
+
 	if (is_quad)
 	{
 		damage *= damage_multiplier;
@@ -1302,7 +1320,10 @@ void Weapon_RocketLauncher_Fire(edict_t *ent)
 
 	vec3_t start, dir;
 	P_ProjectSource(ent, ent->client->v_angle, { 8, 8, -8 }, start, dir);
-	fire_rocket(ent, start, dir, damage, 650, damage_radius, radius_damage);
+	// Kyper - Lithium port
+	//fire_rocket(ent, start, dir, damage, 650, damage_radius, radius_damage);
+	fire_rocket(ent, start, dir, damage, rocket_speed->integer, damage_radius, radius_damage);
+	// Kyper
 
 	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
 
@@ -1347,7 +1368,10 @@ void Blaster_Fire(edict_t *ent, const vec3_t &g_offset, int damage, bool hyper, 
 		P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
 
 	// let the regular blaster projectiles travel a bit faster because it is a completely useless gun
-	int speed = hyper ? 1000 : 1500;
+	//int speed = hyper ? 1000 : 1500;
+	// Kyper - Lithium port
+	int speed = hyper ? hyperblaster_speed->integer : blaster_speed->integer;
+	// Kyper
 
 	fire_blaster(ent, start, dir, damage, speed, effect, hyper ? MOD_HYPERBLASTER : MOD_BLASTER);
 
@@ -1365,8 +1389,11 @@ void Blaster_Fire(edict_t *ent, const vec3_t &g_offset, int damage, bool hyper, 
 
 void Weapon_Blaster_Fire(edict_t *ent)
 {
+	// Kyper - Lithium port
 	// give the blaster 15 across the board instead of just in dm
-	int damage = 15;
+	//int damage = 15;
+	int damage = blaster_damage->integer;
+	// Kyper
 	Blaster_Fire(ent, vec3_origin, damage, false, EF_BLASTER);
 }
 
@@ -1426,10 +1453,16 @@ void Weapon_HyperBlaster_Fire(edict_t *ent)
 			offset[2] = 0;
 			offset[1] = 4 * cosf(rotation);
 
+			// Kyper - Lithium port
+			//if (deathmatch->integer)
+			//	damage = 15;
+			//else
+			//	damage = 20;
 			if (deathmatch->integer)
-				damage = 15;
+				damage = hyperblaster_damage->integer;
 			else
-				damage = 20;
+				damage = hyperblaster_damage_sp->integer;
+			// Kyper
 			Blaster_Fire(ent, offset, damage, true, (ent->client->ps.gunframe % 4) ? EF_NONE : EF_HYPERBLASTER);
 			Weapon_PowerupSound(ent);
 
@@ -1469,7 +1502,10 @@ MACHINEGUN / CHAINGUN
 void Machinegun_Fire(edict_t *ent)
 {
 	int i;
-	int damage = 8;
+	// Kyper - Lithium port
+	//int damage = 8;
+	int damage = machinegun_damage->integer;
+	// Kyper
 	int kick = 2;
 
 	if (!(ent->client->buttons & BUTTON_ATTACK))
@@ -1521,7 +1557,10 @@ void Machinegun_Fire(edict_t *ent)
 	// Paril: kill sideways angle on hitscan
 	P_ProjectSource(ent, ent->client->v_angle, { 0, 0, -8 }, start, dir);
 	G_LagCompensate(ent, start, dir);
-	fire_bullet(ent, start, dir, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+	// Kyper - Lithium port
+	//fire_bullet(ent, start, dir, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+	fire_bullet(ent, start, dir, damage, kick, machinegun_hspread->integer, machinegun_vspread->integer, MOD_MACHINEGUN);
+	// Kyper
 	G_UnLagCompensate();
 	Weapon_PowerupSound(ent);
 
@@ -1563,10 +1602,16 @@ void Chaingun_Fire(edict_t *ent)
 	int	  damage;
 	int	  kick = 2;
 
+	// Kyper - Lithium port
+	//if (deathmatch->integer)
+	//	damage = 6;
+	//else
+	//	damage = 8;
 	if (deathmatch->integer)
-		damage = 6;
+		damage = chaingun_damage->integer;
 	else
-		damage = 8;
+		damage = chaingun_damage_sp->integer;
+	// Kyper
 
 	if (ent->client->ps.gunframe > 31)
 	{
@@ -1659,7 +1704,10 @@ void Chaingun_Fire(edict_t *ent)
 		u = crandom() * 4;
 		P_ProjectSource(ent, ent->client->v_angle, { 0, r, u + -8 }, start, dir);
 
-		fire_bullet(ent, start, dir, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
+		// Kyper - Lithium port
+		//fire_bullet(ent, start, dir, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
+		fire_bullet(ent, start, dir, damage, kick, chaingun_hspread->integer, chaingun_vspread->integer, MOD_CHAINGUN);
+		// Kyper
 	}
 	G_UnLagCompensate();
 
@@ -1693,7 +1741,10 @@ SHOTGUN / SUPERSHOTGUN
 
 void weapon_shotgun_fire(edict_t *ent)
 {
-	int damage = 4;
+	//int damage = 4;
+	// Kyper - Lithium port
+	int damage = shotgun_damage->integer;
+	// Kyper
 	int kick = 8;
 
 	vec3_t start, dir;
@@ -1709,10 +1760,16 @@ void weapon_shotgun_fire(edict_t *ent)
 	}
 
 	G_LagCompensate(ent, start, dir);
-	if (deathmatch->integer)
-		fire_shotgun(ent, start, dir, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
-	else
-		fire_shotgun(ent, start, dir, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+	//
+	//if (deathmatch->integer)
+	//	fire_shotgun(ent, start, dir, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+	//else
+	//	fire_shotgun(ent, start, dir, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+	// Kyper - Lithium port
+	// DEFAULT_DEATHMATCH_SHOTGUN_COUNT and DEFAULT_SHOTGUN_COUNT are both 12
+	// and they don't use DEFAULT_SHOTGUN_H/VSPREAD defines for whatever reason
+	fire_shotgun(ent, start, dir, damage, kick, shotgun_hspread->integer, shotgun_vspread->integer, shotgun_count->integer, MOD_SHOTGUN);
+	// Kyper
 	G_UnLagCompensate();
 
 	// send muzzle flash
@@ -1736,7 +1793,10 @@ void Weapon_Shotgun(edict_t *ent)
 
 void weapon_supershotgun_fire(edict_t *ent)
 {
-	int damage = 6;
+	// Kyper - Lithium port
+	//int damage = 6;
+	int damage = sshotgun_damage->integer;
+	// Kyper
 	int kick = 12;
 
 	if (is_quad)
@@ -1755,10 +1815,16 @@ void weapon_supershotgun_fire(edict_t *ent)
 	v[ROLL] = ent->client->v_angle[ROLL];
 	// Paril: kill sideways angle on hitscan
 	P_ProjectSource(ent, v, { 0, 0, -8 }, start, dir);
-	fire_shotgun(ent, start, dir, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT / 2, MOD_SSHOTGUN);
+	// Kyper - Lithium port
+	//fire_shotgun(ent, start, dir, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT / 2, MOD_SSHOTGUN);
+	fire_shotgun(ent, start, dir, damage, kick, sshotgun_hspread->integer, sshotgun_vspread->integer, sshotgun_count->integer / 2, MOD_SSHOTGUN);
+	// Kyper
 	v[YAW] = ent->client->v_angle[YAW] + 5;
 	P_ProjectSource(ent, v, { 0, 0, -8 }, start, dir);
-	fire_shotgun(ent, start, dir, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT / 2, MOD_SSHOTGUN);
+	// Kyper - Lithium port
+	//fire_shotgun(ent, start, dir, damage, kick, DEFAULT_SHOTGUN_HSPREAD, DEFAULT_SHOTGUN_VSPREAD, DEFAULT_SSHOTGUN_COUNT / 2, MOD_SSHOTGUN);
+	fire_shotgun(ent, start, dir, damage, kick, sshotgun_hspread->integer, sshotgun_vspread->integer, sshotgun_count->integer / 2, MOD_SSHOTGUN);
+	// Kyper
 	G_UnLagCompensate();
 
 	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -2.f, 0.f, 0.f });
@@ -1797,12 +1863,18 @@ void weapon_railgun_fire(edict_t *ent)
 	// normal damage too extreme for DM
 	if (deathmatch->integer)
 	{
-		damage = 100;
+		// Kyper - Lithium port
+		//damage = 100;
+		damage = railgun_damage->integer;
+		// Kyper
 		kick = 200;
 	}
 	else
 	{
-		damage = 125;
+		// Kyper - Lithium port
+		//damage = 125;
+		damage = railgun_damage_sp->integer;
+		// Kyper
 		kick = 225;
 	}
 
@@ -1850,12 +1922,20 @@ BFG10K
 void weapon_bfg_fire(edict_t *ent)
 {
 	int	  damage;
-	float damage_radius = 1000;
+	// Kyper - Lithium port
+	//float damage_radius = 1000;
+	float damage_radius = bfg_radius->integer;
+
+	//if (deathmatch->integer)
+	//	damage = 200;
+	//else
+	//	damage = 500;
 
 	if (deathmatch->integer)
-		damage = 200;
+		damage = bfg_damage->integer;
 	else
-		damage = 500;
+		damage = bfg_damage_sp->integer;
+	// Kyper
 
 	if (ent->client->ps.gunframe == 9)
 	{
@@ -1879,7 +1959,10 @@ void weapon_bfg_fire(edict_t *ent)
 
 	vec3_t start, dir;
 	P_ProjectSource(ent, ent->client->v_angle, { 8, 8, -8 }, start, dir);
-	fire_bfg(ent, start, dir, damage, 400, damage_radius);
+	// Kyper - Lithium port
+	//fire_bfg(ent, start, dir, damage, 400, damage_radius);
+	fire_bfg(ent, start, dir, damage, bfg_speed->integer, damage_radius);
+	// Kyper
 
 	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -20.f, 0, crandom() * 8 });
 	ent->client->kick.total = DAMAGE_TIME();

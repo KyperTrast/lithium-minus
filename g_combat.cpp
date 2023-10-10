@@ -534,6 +534,9 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 	int		   psave;
 	int		   te_sparks;
 	bool	   sphere_notified; // PGM
+	// Kyper - Lithium port
+	float	   adjusted_knockback;
+	// Kyper
 
 	if (!targ->takedamage)
 		return;
@@ -629,6 +632,8 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 		((targ->flags & FL_ALIVE_KNOCKBACK_ONLY) && (!targ->deadflag || targ->dead_time != level.time)))
 		knockback = 0;
 
+	adjusted_knockback = (float)knockback * knockback_adjust->value;
+
 	// figure momentum add
 	if (!(dflags & DAMAGE_NO_KNOCKBACK))
 	{
@@ -644,10 +649,16 @@ void T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker, const vec3_t
 			else
 				mass = (float) targ->mass;
 
+			// Kyper - Lithium port
+			//if (targ->client && attacker == targ)
+			//	kvel = normalized * (1600.0f * knockback / mass); // the rocket jump hack...
+			//else
+			//	kvel = normalized * (500.0f * knockback / mass);
 			if (targ->client && attacker == targ)
-				kvel = normalized * (1600.0f * knockback / mass); // the rocket jump hack...
+				kvel = normalized * (500.0f * adjusted_knockback * knockback_self->value / mass); // the rocket jump hack...
 			else
-				kvel = normalized * (500.0f * knockback / mass);
+				kvel = normalized * (500.0f * adjusted_knockback / mass);
+			// Kyper
 
 			targ->velocity += kvel;
 		}

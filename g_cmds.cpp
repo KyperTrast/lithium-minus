@@ -1375,10 +1375,10 @@ void Cmd_Wave_f(edict_t *ent)
 	// In an attempt to be console friendly, append hook_toggle to wave 3
 	else if (i == GESTURE_WAVE && g_hook_wave->integer)
 	{
-		if (g_use_hook->integer) {
-
-			if (!ent->client->resp.spectator && !ent->deadflag) {
-
+		if (g_use_hook->integer)
+		{
+			if (!ent->client->resp.spectator && !ent->deadflag)
+			{
 				ent->client->hook_toggle = true;
 				Weapon_Hook_Fire(ent);
 				ent->safety_time = 0_ms;
@@ -1707,10 +1707,13 @@ void ClientCommand(edict_t *ent)
 	else if ( Q_strcasecmp( cmd, "drop" ) == 0 ||
 		Q_strcasecmp( cmd, "drop_index" ) == 0 )
 		Cmd_Drop_f( ent );
-	else if ( Q_strcasecmp( cmd, "rune_drop" ) == 0 || Q_strcasecmp(cmd, "runedrop" ) == 0 ||    // Kyper - Lithium port
+	else if ( Q_strcasecmp( cmd, "rune_drop" ) == 0 || Q_strcasecmp( cmd, "runedrop" ) == 0 ||    // Kyper - Lithium port
 		Q_strcasecmp( cmd, "drop_rune") == 0 || Q_strcasecmp( cmd, "droprune" ) == 0 )
 		Rune_Drop( ent );
-	else if (Q_strcasecmp(cmd, "lith_help") == 0 || Q_strcasecmp(cmd, "lith_help_cvar") == 0 )   // Kyper - Lithium port
+	else if (Q_strcasecmp(cmd, "lith_help") == 0 || Q_strcasecmp( cmd, "lith_help_cvar" ) == 0 ||
+		Q_strcasecmp( cmd, "lith_help_cvarpack" ) == 0 || Q_strcasecmp( cmd, "lith_help_cvarstartmax" ) == 0 ||  // Kyper - Lithium port
+		Q_strcasecmp( cmd, "lith_help_cvarbaseweapon" ) == 0 || Q_strcasecmp( cmd, "lith_help_cvarexpweapon" ) == 0  ||
+		Q_strcasecmp( cmd, "lith_help_cvardisable" ) == 0 )
 		Help_Lithium( ent, cmd );
 	else if ( Q_strcasecmp( cmd, "give" ) == 0 )
 		Cmd_Give_f( ent );

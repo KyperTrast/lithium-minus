@@ -1995,8 +1995,6 @@ extern cvar_t *g_use_runes;
 extern cvar_t *g_hook_help;
 extern cvar_t *g_hook_wave;
 extern cvar_t *g_rune_crouchdrop;
-extern cvar_t *g_use_safety;
-extern cvar_t *g_safety_time;
 // Kyper
 
 #define world (&g_edicts[0])
@@ -3032,6 +3030,7 @@ struct gclient_t
 	gtime_t regen_sound_time;  // Kyper - Lithium port - added for remaster	
 	gtime_t help_idle_time;    // Kyper - Lithium port - added for remaster
 	float regen_remainder;
+	bool has_pack;
 
 	// Orange 2 Hook
 	bool    hook_out;
@@ -3275,6 +3274,7 @@ struct edict_t
 	int rune;
 	gtime_t last_sound_time;
 	gtime_t safety_time;
+	//int max_armor;
 
 	// Orange 2 Hook
 	edict_t* laser;

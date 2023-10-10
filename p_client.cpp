@@ -882,6 +882,12 @@ void InitClientPersistant(edict_t *ent, gclient_t *client)
 				client->pers.inventory[IT_WEAPON_RAILGUN] = 1;
 				client->pers.inventory[IT_AMMO_SLUGS] = 99;
 			}
+			// Kyper - Lithium port
+			else if (deathmatch->integer)
+			{
+				Var_PutClientInServer(ent);
+			}
+			// Kyper
 
 			if (level.start_items && *level.start_items)
 				Player_GiveStartItems(ent, level.start_items);
@@ -918,6 +924,10 @@ void InitClientPersistant(edict_t *ent, gclient_t *client)
 
 	client->pers.connected = true;
 	client->pers.spawned = true;
+
+	// Kyper - Lithium port
+	Var_InitClientPersistant(client);
+	// Kyper
 }
 
 void InitClientResp(gclient_t *client)
@@ -2313,8 +2323,8 @@ void PutClientInServer(edict_t *ent)
 	client->newweapon = client->pers.weapon;
 
 	// Kyper - Lithium port
-	if (g_use_safety->integer && g_safety_time->value)
-		ent->safety_time = level.time + gtime_t::from_ms(g_safety_time->value * 1000);
+	if (use_safety->integer && safety_time->value)
+		ent->safety_time = level.time + gtime_t::from_ms(safety_time->value * 1000);
 	else
 		ent->safety_time = 0_ms;
 	// Kyper
@@ -3127,6 +3137,10 @@ void P_FallingDamage(edict_t *ent, const pmove_t &pm)
 			damage = 1;
 		dir = { 0, 0, 1 };
 
+		// Kyper - Lithium port
+		damage = (int) (damage * fall_damagemod->value);
+		// Kyper
+
 		if (!deathmatch->integer || !g_dm_no_fall_damage->integer)
 			T_Damage(ent, world, world, dir, ent->s.origin, vec3_origin, damage, 0, DAMAGE_NONE, MOD_FALLING);
 	}
@@ -3212,7 +3226,7 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 		ent->safety_time = 0_ms;
 
 	if (ent->safety_time && ucmd->buttons & BUTTON_ATTACK &&
-		level.time > (ent->safety_time - gtime_t::from_ms((g_safety_time->value - 0.5) * 1000)))		
+		level.time > (ent->safety_time - gtime_t::from_ms((safety_time->value - 0.5) * 1000)))		
 	{
 		ucmd->buttons &= ~BUTTON_ATTACK;
 		ent->safety_time = 0_ms;

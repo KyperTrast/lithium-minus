@@ -1,0 +1,256 @@
+The Lithium remaster port doesn't have all of the features of the original
+and probably won't ever have them all; I've mostly left out features that
+have to do with server administration, map management, and hud/GUI. You can
+compare this file to config-original.txt to see what's missing.
+
+The top half of this text file contains settings that can be configured in
+the rerelease. Some are remaster specific ex. expansion weapons. The bottom
+half contains settings that aren't available in the remaster and some
+justification as to why they're aren't implemented (the reason is mostly I'm
+either lazy or don't see enough value in adding it).
+
+Also note that a few settings start with g_, I've mostly stuck with this to
+denote it is a major feature (basically hooks/rune related):
+use_runes -> g_use_runes
+use_hook -> g_use_hook
+
+g_use_hook         enables grappling hook
+g_hook_help        enables help text for binding / configuring hook
+g_hook_wave        enables adding hook_toggle to wave command
+hook_speed         sets how fast the hook shoots out
+hook_pullspeed     sets how fast the hook pulls a player
+hook_sky           enables hooking to the sky
+hook_maxtime       sets max time you can stay hooked
+hook_damage        sets damage hook does to other players
+hook_initdamage    sets damage done on initial hooking
+hook_maxdamage     sets maximum damage that can be done by the hook
+hook_delay         sets delay in between hook shots
+
+g_use_runes        enables runes
+g_rune_crouchdrop  enables ability to drop runes with Weapon Wheel + crouch
+use_runes          *** don't use this, use g_use_runes instead
+rune_flags         determines which runes will show in the game, add these:
+                   1 = resist, 2 = strength, 4 = haste, 8 = regen, 16 = vampire
+rune_spawn         chance a rune will spawn from another item respawning
+rune_perplayer     sets runes per player that will appear in map
+rune_life          seconds a rune will stay around before disappearing
+rune_min           sets minimum number of runes to be in the game
+rune_max           sets maximum number of runes to be in the game
+rune_resist        sets how much damage is divided by with resist rune
+rune_strength      sets how much damage is multiplied by with strength rune
+rune_regen         sets how fast health is gained back
+rune_regenmax      sets maximum health that can be gained from regen rune
+rune_vampire       sets percentage of health gained from damage inflicted
+rune_vampiremax    sets maximum health that can be gained from vampire rune
+rune_*_sound       sets sounds for runes
+rune_resist_sound, rune_strength_sound, rune_haste_sound, rune_regen_sound,
+rune_vampire_sound
+
+use_packs          enables packs that spawn randomly in the map
+pack_spawn         chance a pack will spawn from another item respawning
+pack_life          seconds a pack will stay around before disappearing
+pack_*             maximum settings if a player gets a pack
+pack_health, pack_armor (not implemented), pack_bullets, pack_shells, pack_rockets,
+pack_grenades, pack_cells, pack_slugs, pack_magslugs, pack_flechettes,
+pack_disruptorrounds, pack_prox, pack_tesla, pack_traps
+
+start_*            starting settings
+Health/Armor/Ammo - specify value (ex. start_grenades 5 to spawn with 5 grenade ammo)
+start_health, start_armor, start_bullets, start_shells, start_rockets,
+start_grenades, start_cells, start_slugs, start_magslugs, start_flechettes,
+start_disruptorrounds, start_prox, start_tesla, start_traps
+
+Weapons - 1 to Enable, 0 to Disable (ex. start_railgun 1 to spawn with railgun,
+                                     note that this doesn't provide ammo)
+start_shotgun, start_sshotgun, start_machinegun, start_chaingun, start_grenadelauncher,
+start_rocketlauncher, start_hyperblaster, start_railgun, start_bfg, start_chainfist,
+start_etfrifle, start_proxlauncher, start_plasmabeam, start_ionripper, start_phalanx,
+start_disruptor
+
+max_*              maximum settings for health/ammo
+max_health, max_bullets, max_shells, max_rockets, max_grenades, max_cells, max_slugs,
+max_magslugs, max_flechettes, max_disruptorrounds, max_prox, max_tesla, max_traps
+
+no_*               inhibit (disable) items, only takes effect after map change
+no_shotgun, no_sshotgun, no_machinegun, no_chaingun, no_grenadelauncher,
+no_rocketlauncher, no_hyperblaster, no_railgun, no_bfg, no_chainfist, no_etfrifle,
+no_proxlauncher, no_plasmabeam, no_ionripper, no_phalanx, no_disruptor, no_tesla,
+no_traps, no_pent, no_quad
+
+*_damage           sets damage the weapon does per projectile 
+                   *_sp - single player/cooperative for specific weapons
+blaster_damage, shotgun_damage, sshotgun_damage, machinegun_damage,
+chaingun_damage, chaingun_damage_sp, grenade_damage, grenadelauncher_damage,
+rocket_damage, hyperblaster_damage, hyperblaster_damage_sp, railgun_damage,
+railgun_damage_sp, bfg_damage, bfg_damage_sp, chainfist_damage,
+chainfist_damage_sp, etfrifle_damage, proxlauncher_damage, ionripper_damage,
+ionripper_damage_sp, plasmabeam_damage, phalanx_damage, disruptor_damage,
+disruptor_damage_sp, tesla_damagerate
+
+*_speed            sets speed of projectile fired
+blaster_speed, rocket_speed, hyperblaster_speed, bfg_speed, etfrifle_speed,
+ionripper_speed, phalanx_speed, disruptor_speed
+
+*_count            sets how many projectiles are fired
+shotgun_count, sshotgun_count
+
+*_hspread          sets the horizontal spread radius of projectiles
+shotgun_hspread, sshotgun_hspread, machinegun_hspread, chaingun_hspread
+
+*_vspread          sets the vertical spread radius of projectiles
+shotgun_vspread, sshotgun_vspread, machinegun_vspread, chaingun_vspread
+
+*_radius           sets the explosion radius
+grenade_radius, grenadelauncher_radius, rocket_radius, bfg_radius,
+proxlauncher_radius, phalanx_radius, phalanx_radius2 (2nd projectile)
+
+*_damage2          sets max random extra damage
+rocket_damage2, phalanx_damage2
+
+*_rdamage          sets radius damage
+rocket_rdamage, phalanx_rdamage, phalanx_rdamage2 (2nd projectile)
+
+rocket_knockback   sets knockback of Rocket Launcher
+bfg_balldamage     BFG ball damage
+bfg_raydamage      BFG laser ray damage per tick
+bfg_raydamage_sp   BFG laser ray damage per tick - single player/coop
+chainfist_range    sets range of Chainfist
+plasmabeam_kick    sets kick/knockback strength of Plasma Beam
+plasmabeam_kick_sp                               - single player/coop
+disruptor_fixticks fixes bug to ensure 5 ticks of damage
+trap_triggerradius effective area of Trap once active
+
+use_safety         enables safety spawn period
+safety_time        time the safety spawn shield lasts
+knockback_adjust   knockback adjustment (impact knockbacks multiplied by this)
+knockback_self     knockback adjustment for self inflicted impacts
+                   (use this to modify rocket jumping height)
+fall_damagemod     fall damage modifier (fall damage multiplied by this)
+
+===============================================================================
+Settings in the original not added to remaster:
+===============================================================================
+Administration stuff:
+- g_map_list in remaster, although not as sophisticated as use_mapqueue, is
+good enough for creating a map list
+- I think flood_* settings are decent enough for chat management
+- stats/score logging looks neat but not willing to look at implementing storage
+
+admin_code         sets the admin code, 0 to disable (max 5 digits)
+
+use_startobserver  enables starting clients in observer mode
+use_startchasecam  enables starting clients in chasecam mode
+use_suicidekick    enables kicking clients to mass suicide
+use_chatmuzzle     enables muzzling clients who chat too much
+use_chatkick       enables kicking clients who chat too much
+use_zbotkick       enables Zbot detection and kicking
+use_zbotlog        enables Zbot logging to zbot.log
+use_hitfactor      enables aim to be factored into damage inflicted
+use_nocamp         enables no camping check
+use_gslog          enables GSLog frag logging (Gibstats Standard Log)
+use_mapqueue       enables map queueing
+use_mapvote        enables map voting
+use_highscores     enables high scores tracking feature
+use_lmaster        enables communication with lithium master server
+-------------------------------------------------------------------------------
+CTF settings:
+- remaster has ctf and uses g_allow_techs/grapple
+- did away with ctf_coloredhook setting, just made it default for teams
+- remaster has team quad colors
+
+ctf                enables ThreeWave CTF II
+ctf_techs          enables ThreeWave CTF II Techs
+ctf_grapple        enables ThreeWave CTF II Grapple
+ctf_coloredhook    enables lithium hook to be colored as per clients team
+ctf_coloredquad    enables quad shell to be colored as per clients team
+-------------------------------------------------------------------------------
+More admin stuff:
+- Not really interested in admin management settings
+
+timestamp          specify how many minutes between console timestamps
+
+mapqueue           sets plain text file to read for map cycling
+map_random         enables random map queue order
+
+motd               sets plain text file to read for MOTD
+banlist            sets plain text file to read for IP banning
+
+adminlist          sets admin list file
+admin_map          sets admin level required to change maps
+admin_kick         sets admin level required to kick clients
+admin_dmflags      sets admin level required to change dmflags
+admin_uses         sets admin level required to change use_* variables
+admin_vars         sets admin level required to change all variables
+
+gslog              sets GSLog output file
+gslog_flush        enables instant logging
+-------------------------------------------------------------------------------
+HUD, misc gameplay, and more admin settings:
+- id is added to remaster (not sure what the cvar is)
+- fast_respawn seems interesting for drop-in/out TDM but Weapons Stay is fine for
+FFA and standard spawn times for pickup TDM/1v1s
+
+def_bestweapon     sets default client bestweapon on/off
+def_id             sets default client player id on/off
+def_hud            sets default client HUD
+                   (0 = none, 1 = normal, 2 = lithium, 3 = ammo)
+def_scores         sets default client scoreboard layout
+                   (0 = old, 1 = by frags, 2 = by FPH)
+
+fast_respawn       sets how much faster items respawn, as more players join
+fast_minpbound     always figure at least this many players for fast_respawn
+fast_maxpbound     never figure more then this many players for fast_respawn
+
+fast_wep           how fast weapon switching is (0 = stock Q2,
+                   1 = old Lithium II, 2 = new default, 3+ = even faster)
+
+max_rate           maximum rate setting the server will allow a client to have
+
+ping_watch         seconds after client joins to start checking their ping
+ping_endwatch      seconds after client joins to end checking their ping
+ping_min           minimum average ping allowed, or client is kicked
+ping_max           maximum average ping allowed, or client is kicked
+
+chatmuzzle_says    \ if client chatmuzzle_says within chatmuzzle_time,
+chatmuzzle_time    / client will be muzzled for chatmuzzle_holdtime
+chatmuzzle_holdtime 
+
+chatkick_says      \ if client chatkick_says within chatkick_time,
+chatkick_time      / client will be kicked for chatting too much
+chatkick_muzzles   kick client needing to be muzzled this many times
+
+mapvote_min        minimum clients before map voting is allowed
+mapvote_max        maximum clients before map voting is allowed
+mapvote_time       time a map vote can last, in seconds
+mapvote_need       percent of clients required to vote
+mapvote_pass       percent of yes votes required to pass the vote
+mapvote_tries      sets tries a client has to set map vote (reset each map)
+mapvote_instant    allows instant map change option if enabled
+
+intermission_time  minimum time the intermission will last
+intermission_sound sound to play during intermission
+
+camp_threshold     sets movement required to not be camping
+camp_time          seconds a player has before getting a camping warning
+camp_warn          seconds a player has after warned, or be killed
+-------------------------------------------------------------------------------
+Ammo and Armor settings:
+- dropweapammo is interesting, players don't need to make binds to drop ammo
+together with weapons but I think I'd rather implement an alternate drop command
+to drop ammo instead
+- armorinfo is made constant for some reason, it's probably fine to make it a
+regular variable but not going to for now
+- max_armor seems janky - appears to only affect shards
+
+dropweapammo       percentage of default ammo gained from a dropped weapon
+
+max_armor
+
+jacket_armor       sets pickup amount, max amount, normal resist, energy resist
+combat_armor       sets pickup amount, max amount, normal resist, energy resist
+body_armor         sets pickup amount, max amount, normal resist, energy resist
+shard_armor        sets amount of armor gained from armor shards
+
+power_armor_screen sets damage saved per cell
+power_armor_shield sets damage saved per cell
+
